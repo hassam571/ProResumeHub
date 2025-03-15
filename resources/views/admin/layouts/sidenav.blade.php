@@ -109,6 +109,8 @@
                 </ul>
             </li>
 
+
+
             <li>
                 <a href="javascript:;" class="has-arrow">
                     <div class="parent-icon"><i class="material-icons-outlined">description</i></div>
@@ -117,6 +119,19 @@
                 <ul>
                     <li><a href="{{ route('admin.contract.create') }}"><i class="material-icons-outlined">add</i>Add Contract</a></li>
                     <li><a href="{{ route('admin.contract.list') }}"><i class="material-icons-outlined">view_list</i>Contract List</a></li>
+                </ul>
+            </li>
+
+
+            <li>
+                <a href="javascript:;" class="has-arrow">
+                    <div class="parent-icon"><i class="material-icons-outlined">receipt_long</i></div>
+                    <div class="menu-title">Order</div>
+                </a>
+                <ul>
+                    <li><a href="{{ route('orders.create') }}"><i class="material-icons-outlined">add</i>Add Order</a></li>
+                    <li><a href="{{ route('orders.index') }}"><i class="material-icons-outlined">view_list</i>Order List</a></li>
+                    <li><a href="{{ route('orders.performance') }}"><i class="material-icons-outlined">view_list</i>Performance</a></li>
                 </ul>
             </li>
 
@@ -142,8 +157,8 @@
                     transform: none;
                     z-index: 1;
                 }
-            
-         
+
+
                 .menu-title {
                     margin-left: 0.5rem;
                     font-size: 1rem;
@@ -151,7 +166,7 @@
                     color: #fff;
                 }
             </style>
-            
+
 
 
 
@@ -165,7 +180,7 @@
                         @php
                             $contactCount = \App\Models\ContactUs::count();
                         @endphp
-                      
+
                     </div>
                     @if($contactCount > 0)
                     <span class="badge bg-danger">
@@ -175,15 +190,15 @@
                     <div class="menu-title">Contacts</div>
                 </a>
             </li>
-            
 
-            
+
+
 
         </ul>
 
 
 
 
-    
+
     </div>
 </aside>

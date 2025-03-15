@@ -50,7 +50,7 @@
                                     <a href="{{ route('admin.invoices.edit', $invoice->id) }}" class="btn btn-outline-primary btn-sm" title="Edit">
                                         <i class="material-icons-outlined">edit</i> Edit
                                     </a>
-                                    
+
 
                                     <!-- Delete Button -->
                                     {{-- <form action="{{ route('admin.invoices.destroy', $invoice->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this invoice?');">

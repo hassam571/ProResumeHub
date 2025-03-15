@@ -16,15 +16,15 @@ class ContactUsController extends Controller
         $contacts = ContactUs::where('user_id', Auth::id())->get(); // Ensure to fetch records for the authenticated user
         return view('admin.pages.contacts.list', compact('contacts'));
     }
-    
+
     public function destroy($id)
     {
         $contact = ContactUs::findOrFail($id);
         $contact->delete();
-    
+
         return redirect()->route('admin.contacts.list')->with('success', 'Contact record deleted successfully!');
     }
-    
+
 
 
 
@@ -37,12 +37,13 @@ class ContactUsController extends Controller
         ]);
 
         ContactUs::create([
-            'user_id' => Auth::id(), // Associate with logged-in user
+            'user_id' => Auth::id(),
             'name' => $request->name,
             'email' => $request->email,
             'message' => $request->message,
         ]);
 
-        return response()->json(['success' => 'Message sent successfully!'], 200);
+        return redirect()->back()->with('success', 'Contact record added successfully!');
+//        return response()->json(['success' => 'Message sent successfully!'], 200);
     }
 }

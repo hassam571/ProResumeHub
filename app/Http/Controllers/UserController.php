@@ -82,8 +82,6 @@ public function update(Request $request, User $user)
 {
     // Retrieve all input data
     $data = $request->all();
-
-    // Handle file upload if present
     if ($request->hasFile('files')) {
         $data['dp_path'] = $request->file('files')->store('dp', 'public');
     }

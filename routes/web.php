@@ -15,13 +15,14 @@ use App\Http\Controllers\ContractController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\EducationController;
+use App\Http\Controllers\OrderController;
 
 Route::post('/contact-us', [ContactUsController::class, 'store'])->name('contact.store');
 
 
 
 Route::get('/', function () {
-    return view('page.index');
+    return view('frontend.company.index');
 })->name('index');
 
 
@@ -31,19 +32,8 @@ Route::get('admin/auth/login', [AuthController::class, 'Adminlogin'])->name('adm
 Route::post('admin/auth/login', [AuthController::class, 'login'])->name('login.post');
 Route::resource('users', UserController::class);
 Route::post('/update-last-activity', [ActivityController::class, 'update'])->name('update.lastActivity')->middleware('auth');
-
 Route::post('admin/auth/logout', [AuthController::class, 'logout'])->name('logout');
-
 Route::post('/update-last-activity', [ActivityController::class, 'update'])->name('update.lastActivity')->middleware('auth');
-
-
-
-
-
-
-
-
-
 
 
 Route::middleware(['auth'])->name('admin.')->group(function () {
@@ -115,7 +105,7 @@ Route::middleware(['auth'])->name('admin.')->group(function () {
             Route::get('/edit/{id}/edit', [InvoiceController::class, 'edit'])->name('invoices.edit');
             Route::get('/download/{id}/download', [InvoiceController::class, 'download'])->name('invoices.download');
             Route::put('/update/{id}/', [InvoiceController::class, 'update'])->name('invoices.update');
-            
+
         });
 
 
@@ -139,42 +129,44 @@ Route::middleware(['auth'])->name('admin.')->group(function () {
             Route::get('/{education}/edit', [EducationController::class, 'edit'])->name('educations.edit');
             Route::put('/update/{education}', [EducationController::class, 'update'])->name('education.update');
             Route::delete('/delete/{education}', [EducationController::class, 'destroy'])->name('education.destroy');
-    
+
         });
 
         // Languages Management
         Route::prefix('languages')->group(function () {
             Route::get('/', [LanguageController::class, 'index'])->name('languages.index');
-            Route::get('/create', [LanguageController::class, 'create'])->name('languages.create'); 
-            Route::post('', [LanguageController::class, 'store'])->name('languages.store'); 
-            Route::get('/{language}/edit', [LanguageController::class, 'edit'])->name('languages.edit'); 
-            Route::put('/{language}', [LanguageController::class, 'update'])->name('languages.update'); 
-            Route::delete('/{language}', [LanguageController::class, 'destroy'])->name('languages.destroy'); 
+            Route::get('/create', [LanguageController::class, 'create'])->name('languages.create');
+            Route::post('', [LanguageController::class, 'store'])->name('languages.store');
+            Route::get('/{language}/edit', [LanguageController::class, 'edit'])->name('languages.edit');
+            Route::put('/{language}', [LanguageController::class, 'update'])->name('languages.update');
+            Route::delete('/{language}', [LanguageController::class, 'destroy'])->name('languages.destroy');
         });
-        
-     
-     
-     
+
+
+
+
         Route::prefix('contacts')->group(function () {
             Route::get('/list', [ContactUsController::class, 'list'])->name('contacts.list');
     Route::delete('/delete/{id}', [ContactUsController::class, 'destroy'])->name('contacts.destroy');
 
         });
-        
 
-  
+
+
     });
 });
 
-
-
-
-
 Route::prefix('/{username}')->group(function () {
 
-    Route::get('/', [HomeController::class, 'index'])->name('index');
-`
-
+//    Route::get('/', [HomeController::class, 'index'])->name('index');
+    Route::get('/', [PagesController::class, 'perezIndex'])->name('index');
+    Route::get('/about', [PagesController::class, 'perezAbout'])->name('about');
+    Route::get('/blog', [PagesController::class, 'perezBlog'])->name('blog');
+    Route::get('/blog-detail/{id}', [PagesController::class, 'perezBlogDetail'])->name('blog.details');
+//    Route::get('/blog-detail', [PagesController::class, 'perezAllBlogDetail'])->name('blogs.details');
+    Route::get('/contact', [PagesController::class, 'perezContact'])->name('contact');
+    Route::get('/projects', [PagesController::class, 'perezProjects'])->name('projects');
+    Route::get('/projects-detail/{id}', [PagesController::class, 'perezProjectsDetail'])->name('project.details');
 
 });
 
@@ -196,3 +188,25 @@ Route::get('/work_single_image', [PagesController::class, 'workSingleImage'])->n
 Route::get('/work_single', [PagesController::class, 'workSingle'])->name('work_single');
 Route::get('/works_creative', [PagesController::class, 'worksCreative'])->name('works_creative');
 Route::get('/works', [PagesController::class, 'works'])->name('works');
+
+
+
+
+Route::prefix('orders')->name('orders.')->group(function () {
+    Route::get('/create', [OrderController::class, 'create'])->name('create');
+    Route::post('/store', [OrderController::class, 'store'])->name('store');
+    Route::get('/list', [OrderController::class, 'index'])->name('index');
+    Route::get('/show/{id}', [OrderController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [OrderController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [OrderController::class, 'update'])->name('update');
+    Route::delete('/{id}', [OrderController::class, 'destroy'])->name('destroy');
+    Route::get('/{id}/manage', [OrderController::class, 'manage'])->name('manage');
+    Route::get('/performance/{orderId?}', [OrderController::class, 'performance'])->name('performance');
+
+});
+Route::any('/milestones/markDone', [OrderController::class, 'markDone'])->name('orders.markDone');
+
+
+
+
+
